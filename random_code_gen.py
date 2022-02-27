@@ -25,6 +25,7 @@ Source:
 from bs4 import BeautifulSoup
 import urllib
 import random
+import urllib.request
 
 PAGES_COUNT = 60
 
@@ -102,7 +103,7 @@ def startpy():
     print('Hey there')
 
     get_info(
-        programming = 'python'
+        programming = 'scala'
     )
 
 if __name__ == '__main__':
