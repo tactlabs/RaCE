@@ -20,7 +20,6 @@ setuptools.setup(
     ],                                      # Information to filter the project on PyPi website
     python_requires='>=3.6',                # Minimum version requirement of the package
     py_modules=["RanCE"],             # Name of the python package
-    # package_dir={'':'cricpy2/src'},# Directory of the source code of the package
     install_requires=requirements,
     include_package_data=True                # Install other dependencies if any
 )
