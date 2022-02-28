@@ -7,7 +7,7 @@ requirements = [requirement for requirement in open('requirements.txt')]
 
 setuptools.setup(
     name="RanCE",                     # This is the name of the package
-    version="0.0.1",                        # The initial release version
+    version="0.0.2",                        # The initial release version
     author="Featureprenuer",                     # Full name of the author
     description="Random Code Emitter",
     long_description=long_description,      # Long description read from the the readme file
