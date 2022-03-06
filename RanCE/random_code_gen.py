@@ -26,7 +26,7 @@ from bs4 import BeautifulSoup
 import urllib
 import random
 import urllib.request
-from .template import hello_world
+# from .template import hello_world
 
 PAGES_COUNT = 60
 
