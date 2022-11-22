@@ -21,4 +21,6 @@ Collect code from tabnine
 
 Collect library from Libhunt
     https://www.libhunt.com/r/yt-dlp
+
+Collect from https://programtalk.com/python-examples/flask.ext.sqlalchemy.SQLAlchemy/
 ```
