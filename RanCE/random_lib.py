@@ -1,9 +1,9 @@
+import http.server
+import socketserver
 import requests
 import random
+import markdown
 from bs4 import BeautifulSoup
-
-import requests
-import random
 
 def get_random_pypi_package_details():
     # Get a random package name
@@ -58,21 +58,54 @@ def get_random_pypi_package_name():
     # Select a random package name
     return random.choice(packages)
 
-# Call the function to get details about a random package
-random_package_details = get_random_pypi_package_details()
+def generate_index_html(package_details):
+    # Convert Markdown description to HTML
+    html_description = markdown.markdown(package_details['description'])
 
-def print_divider():
+    # Generate HTML content for the index page
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Random PyPI Package Details</title>
+    </head>
+    <body>
+        <h1>Package Name: {package_details['name']}</h1>
+        <p>Description: {html_description}</p>
+        <p>Subtitle: {package_details['subtitle']}</p>
+        <p>Release Date: {package_details['release_date']}</p>
+        <script>
+            // Reload the page on window load to fetch new package details
+            window.onload = function() {{
+                window.location.reload(true);
+            }};
+        </script>
+    </body>
+    </html>
+    """
 
-    print('-'*100)
+    return html_content
 
-def print_with_divider(content):
+# Set up the HTTP server
+PORT = 8000
+Handler = http.server.SimpleHTTPRequestHandler
 
-    print(content)
-    print_divider()
+class MyHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        # Get random package details
+        random_package_details = get_random_pypi_package_details()
 
-if random_package_details:
-    # Print package details
-    print_with_divider(f"Package Name: {random_package_details['name']}")
-    print_with_divider(f"Description: {random_package_details['description']}")
-    print_with_divider(f"Subtitle: {random_package_details['subtitle']}")
-    print_with_divider(f"Release Date: {random_package_details['release_date']}")
+        if random_package_details:
+            # Generate HTML content
+            html_content = generate_index_html(random_package_details)
+
+            # Send HTTP response
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(html_content.encode())
+
+with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+    print(f"Serving at port {PORT}")
+    # Serve the current directory
+    httpd.serve_forever()
